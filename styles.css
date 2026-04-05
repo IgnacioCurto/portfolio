@@ -1,0 +1,637 @@
+/* ============================================================
+   PORTFOLIO — styles.css
+   Vanilla CSS conversion of the React/Tailwind portfolio.
+   Uses CSS custom properties for easy theming.
+   ============================================================ */
+
+/* ----- Reset & Base ----- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors (HSL values) */
+  --clr-background: hsl(0, 0%, 4%);
+  --clr-foreground: hsl(0, 0%, 92%);
+  --clr-primary: hsl(0, 100%, 50%);
+  --clr-primary-fg: hsl(0, 0%, 100%);
+  --clr-secondary: hsl(0, 0%, 12%);
+  --clr-secondary-fg: hsl(0, 0%, 70%);
+  --clr-muted: hsl(0, 0%, 10%);
+  --clr-muted-fg: hsl(0, 0%, 50%);
+  --clr-border: hsl(0, 0%, 15%);
+
+  /* Fonts */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--clr-background);
+  color: var(--clr-foreground);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+}
+
+/* ----- Skip link (accessibility) ----- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--clr-primary);
+  color: var(--clr-primary-fg);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  z-index: 100;
+  border-radius: 0 0 4px 4px;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ----- Focus styles (accessibility) ----- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 2px;
+}
+
+/* ----- Language toggle ----- */
+.lang-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--clr-border);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--clr-muted-fg);
+  transition: border-color 0.3s;
+}
+
+.lang-toggle:hover {
+  border-color: var(--clr-primary);
+}
+
+.lang-toggle__separator {
+  color: var(--clr-border);
+}
+
+.lang-toggle__option {
+  transition: color 0.3s;
+}
+
+.lang-toggle__option--active {
+  color: var(--clr-primary);
+}
+
+/* ----- Animation: scroll-triggered fade-in ----- */
+[data-animate] {
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(30px);
+}
+
+[data-animate="fade-left"] {
+  transform: translateX(-40px);
+}
+
+[data-animate="fade-in"] {
+  transform: none;
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* ----- Reduced motion ----- */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .gallery__img {
+    transition: none;
+  }
+}
+
+/* ----- Utilities ----- */
+.text-glitch {
+  position: relative;
+}
+
+.line-accent {
+  position: relative;
+}
+
+.line-accent::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 60px;
+  height: 3px;
+  background: var(--clr-primary);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Background image */
+.hero__background {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__overlay--vertical {
+  background: linear-gradient(to top, var(--clr-background), rgba(10, 10, 10, 0.6), transparent);
+}
+
+.hero__overlay--horizontal {
+  background: linear-gradient(to right, rgba(10, 10, 10, 0.8), transparent);
+}
+
+/* Content */
+.hero__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 0 1.5rem 5rem;
+}
+
+.hero__subtitle {
+  margin-bottom: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--clr-muted-fg);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 12rem);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: var(--clr-foreground);
+}
+
+/* Hero nav links */
+.hero__links {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.hero__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--clr-muted-fg);
+  transition: color 0.3s;
+}
+
+.hero__link:hover {
+  color: var(--clr-primary);
+}
+
+.hero__link-line {
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background: var(--clr-muted-fg);
+  transition: width 0.3s, background-color 0.3s;
+}
+
+.hero__link--arrow:hover .hero__link-line {
+  width: 4rem;
+  background: var(--clr-primary);
+}
+
+/* Side label */
+.hero__side-label {
+  display: none;
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  z-index: 10;
+  transform: translateY(-50%) rotate(-90deg);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: var(--clr-muted-fg);
+}
+
+/* ============================================================
+   ART GALLERY
+   ============================================================ */
+.gallery {
+  padding: 6rem 1.5rem;
+}
+
+.gallery__header {
+  margin-bottom: 4rem;
+}
+
+.gallery__label {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--clr-primary);
+}
+
+.gallery__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.05em;
+  color: var(--clr-foreground);
+}
+
+/* Grid */
+.gallery__grid {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Gallery item */
+.gallery__item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--clr-border);
+  cursor: pointer;
+}
+
+.gallery__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+
+.gallery__item:hover .gallery__img {
+  transform: scale(1.05);
+}
+
+/* Overlay on hover */
+.gallery__item-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  transition: background 0.5s;
+}
+
+.gallery__item:hover .gallery__item-overlay {
+  background: rgba(10, 10, 10, 0.7);
+}
+
+/* Info text on hover */
+.gallery__item-info {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.gallery__item:hover .gallery__item-info {
+  opacity: 1;
+}
+
+.gallery__item-category {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--clr-primary);
+}
+
+.gallery__item-title {
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  letter-spacing: 0.05em;
+  color: var(--clr-foreground);
+}
+
+/* Corner accent */
+.gallery__item-corner {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-right: 40px solid transparent;
+  border-top: 40px solid var(--clr-primary);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gallery__item:hover .gallery__item-corner {
+  opacity: 1;
+}
+
+/* ============================================================
+   WEB DEVELOPMENT
+   ============================================================ */
+.webdev {
+  border-top: 1px solid var(--clr-border);
+  padding: 6rem 1.5rem;
+}
+
+.webdev__header {
+  margin-bottom: 4rem;
+}
+
+.webdev__label {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--clr-muted-fg);
+}
+
+.webdev__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 0.05em;
+  color: var(--clr-secondary-fg);
+}
+
+/* Cards grid — gap trick for 1px borders */
+.webdev__grid {
+  display: grid;
+  gap: 1px;
+  background-color: var(--clr-border);
+}
+
+.webdev__card {
+  background: var(--clr-background);
+  padding: 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.webdev__card:hover {
+  background-color: var(--clr-secondary);
+}
+
+.webdev__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.webdev__icon {
+  color: var(--clr-muted-fg);
+}
+
+.webdev__icon--external {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.webdev__card:hover .webdev__icon--external {
+  opacity: 1;
+}
+
+.webdev__card-name {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  color: var(--clr-foreground);
+}
+
+.webdev__card-desc {
+  margin-bottom: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--clr-muted-fg);
+}
+
+.webdev__card-tech {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--clr-muted-fg);
+}
+
+/* ============================================================
+   CONTACT / FOOTER
+   ============================================================ */
+.contact {
+  border-top: 1px solid var(--clr-border);
+  padding: 6rem 1.5rem;
+}
+
+.contact__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.contact__label {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--clr-primary);
+}
+
+.contact__title {
+  margin-bottom: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.05em;
+  color: var(--clr-foreground);
+}
+
+.contact__email {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  color: var(--clr-muted-fg);
+  transition: color 0.3s;
+}
+
+.contact__email:hover {
+  color: var(--clr-primary);
+}
+
+.contact__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact__link {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--clr-muted-fg);
+  transition: color 0.3s;
+}
+
+.contact__link:hover {
+  color: var(--clr-primary);
+}
+
+.contact__bottom {
+  margin-top: 6rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--clr-border);
+}
+
+.contact__bottom p {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--clr-muted-fg);
+}
+
+/* ============================================================
+   RESPONSIVE — md (768px+)
+   ============================================================ */
+@media (min-width: 768px) {
+  .hero__content {
+    padding: 0 4rem 5rem;
+  }
+
+  .hero__side-label {
+    display: block;
+  }
+
+  .gallery {
+    padding: 6rem 4rem;
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery__item--featured {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .webdev {
+    padding: 6rem 4rem;
+  }
+
+  .webdev__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .contact {
+    padding: 6rem 4rem;
+  }
+
+  .contact__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — lg (1024px+)
+   ============================================================ */
+@media (min-width: 1024px) {
+  .hero__content {
+    padding: 0 6rem 5rem;
+  }
+
+  .gallery {
+    padding: 6rem 6rem;
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .webdev {
+    padding: 6rem 6rem;
+  }
+
+  .contact {
+    padding: 6rem 6rem;
+  }
+}
