@@ -199,17 +199,21 @@ button:focus-visible {
   object-fit: cover;
 }
 
+.hero__name {
+  width: 66rem;
+}
+
 .hero__overlay {
   position: absolute;
   inset: 0;
 }
 
 .hero__overlay--vertical {
-  background: linear-gradient(to top, var(--clr-background), rgba(10, 10, 10, 0.6), transparent);
+  background: linear-gradient(to top, var(--clr-background), rgba(10, 10, 10, 0.4), transparent);
 }
 
 .hero__overlay--horizontal {
-  background: linear-gradient(to right, rgba(10, 10, 10, 0.8), transparent);
+  background: linear-gradient(to right, rgba(10, 10, 10, 0.5), transparent);
 }
 
 /* Content */
@@ -224,7 +228,7 @@ button:focus-visible {
 }
 
 .hero__subtitle {
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   font-family: var(--font-body);
   font-size: 0.875rem;
   text-transform: uppercase;
