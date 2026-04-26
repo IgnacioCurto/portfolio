@@ -267,7 +267,7 @@ button:focus-visible {
 }
 
 .hero__overlay--vertical {
-    background: linear-gradient(to top, var(--clr-background), rgba(10, 10, 10, 0.4), transparent);
+    background: linear-gradient(to top, var(--clr-background), rgba(10, 10, 10, 0.3), transparent);
 }
 
 .hero__overlay--horizontal {
@@ -651,7 +651,7 @@ button:focus-visible {
 
     .gallery__item--featured {
         grid-column: span 2;
-        grid-row: span 2;
+        grid-row: span 1;
     }
 
     .webdev {
