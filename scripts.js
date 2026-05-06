@@ -103,13 +103,16 @@
     lightboxCategory.textContent = catEl ? catEl.getAttribute('data-lang-' + lang) || catEl.textContent : '';
     lightboxTitle.textContent    = titleEl ? titleEl.getAttribute('data-lang-' + lang) || titleEl.textContent : '';
 
-    lightbox.classList.add('is-open');
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = scrollbarWidth + 'px';
+    lightbox.classList.add('is-open');
   }
 
   function closeLightbox() {
     lightbox.classList.remove('is-open');
     document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
   }
 
   document.querySelectorAll('.gallery__item').forEach(function (item) {
