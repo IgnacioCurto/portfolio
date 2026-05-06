@@ -84,4 +84,21 @@
   if (saved === 'es') {
     setLanguage('es');
   }
+
+  /* ---- Gallery "See more" button ---- */
+  var seeMoreBtn = document.querySelector('.gallery__see-more');
+  var hiddenItems = document.querySelectorAll('.gallery__item--hidden');
+
+  if (seeMoreBtn && hiddenItems.length > 0) {
+    seeMoreBtn.addEventListener('click', function () {
+      hiddenItems.forEach(function (item, index) {
+        setTimeout(function () {
+          item.classList.remove('gallery__item--hidden');
+          item.classList.add('gallery__item--revealed');
+        }, index * 100); // Stagger animations
+      });
+
+      seeMoreBtn.classList.add('hidden');
+    });
+  }
 })();

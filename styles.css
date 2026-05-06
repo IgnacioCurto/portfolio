@@ -30,6 +30,17 @@
     --font-body: 'Space Grotesk', sans-serif;
 }
 
+::selection {
+    background-color: hsla(0, 100%, 50%, 0.384);
+    color: white;
+}
+
+/* For Firefox compatibility */
+::-moz-selection {
+    background-color: hsla(0, 100%, 50%, 0.384);
+    color: white;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -465,6 +476,52 @@ button:focus-visible {
     opacity: 1;
 }
 
+/* See more button */
+.gallery__see-more {
+    display: block;
+    margin: 3rem auto 0;
+    padding: 1rem 2.5rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--clr-foreground);
+    background: transparent;
+    border: 1px solid var(--clr-border);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.gallery__see-more:hover {
+    color: var(--clr-primary);
+    border-color: var(--clr-primary);
+}
+
+.gallery__see-more.hidden {
+    display: none;
+}
+
+/* Hidden gallery items */
+.gallery__item--hidden {
+    display: none;
+}
+
+.gallery__item--revealed {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ============================================================
    WEB DEVELOPMENT
    ============================================================ */
@@ -519,7 +576,7 @@ button:focus-visible {
 }
 
 .webdev__icon {
-    color: var(--clr-muted-fg);
+    color: var(--clr-primary);
 }
 
 .webdev__icon--external {
@@ -552,6 +609,76 @@ button:focus-visible {
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: var(--clr-muted-fg);
+}
+
+/* ============================================================
+   ABOUT ME
+   ============================================================ */
+.about {
+    border-top: 1px solid var(--clr-border);
+    padding: 6rem 1.5rem;
+}
+
+.about__header {
+    margin-bottom: 4rem;
+}
+
+.about__label {
+    margin-bottom: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--clr-primary);
+}
+
+.about__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 0.05em;
+    color: var(--clr-foreground);
+}
+
+.about__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.about__image-wrapper {
+    flex-shrink: 0;
+    & img {
+        max-height: 400px;
+    }
+}
+
+.about__image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border: solid white;
+    border-width: 8px 8px 50px 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about__text-wrapper {
+    flex: 1;
+}
+
+.about__text {
+    margin-bottom: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--clr-muted-fg);
+}
+
+.about__text:last-child {
+    margin-bottom: 0;
+}
+
+.about__text-highlight {
+    color: var(--clr-primary);
 }
 
 /* ============================================================
@@ -654,12 +781,26 @@ button:focus-visible {
         grid-row: span 1;
     }
 
+    .gallery__item--carrousel {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
     .webdev {
         padding: 6rem 4rem;
     }
 
     .webdev__grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .about {
+        padding: 6rem 4rem;
+    }
+
+    .about__content {
+        flex-direction: row;
+        align-items: flex-start;
     }
 
     .contact {
@@ -690,6 +831,10 @@ button:focus-visible {
     }
 
     .webdev {
+        padding: 6rem 6rem;
+    }
+
+    .about {
         padding: 6rem 6rem;
     }
 
