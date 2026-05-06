@@ -549,6 +549,19 @@
         </div>
     </footer>
 
+    <!-- ========== LIGHTBOX ========== -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button class="lightbox__close" id="lightboxClose" aria-label="Close">&times;</button>
+        <div class="lightbox__backdrop" id="lightboxBackdrop"></div>
+        <div class="lightbox__content">
+            <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+            <div class="lightbox__info">
+                <span class="lightbox__category" id="lightboxCategory"></span>
+                <span class="lightbox__title" id="lightboxTitle"></span>
+            </div>
+        </div>
+    </div>
+
     <script src="scripts.js"></script>
 </body>
 

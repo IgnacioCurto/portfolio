@@ -85,6 +85,48 @@
     setLanguage('es');
   }
 
+  /* ---- Lightbox ---- */
+  var lightbox         = document.getElementById('lightbox');
+  var lightboxImg      = document.getElementById('lightboxImg');
+  var lightboxCategory = document.getElementById('lightboxCategory');
+  var lightboxTitle    = document.getElementById('lightboxTitle');
+  var lightboxClose    = document.getElementById('lightboxClose');
+  var lightboxBackdrop = document.getElementById('lightboxBackdrop');
+
+  function openLightbox(imgEl, item) {
+    var lang = document.documentElement.lang || 'en';
+    var catEl   = item.querySelector('.gallery__item-category');
+    var titleEl = item.querySelector('.gallery__item-title');
+
+    lightboxImg.src = imgEl.src;
+    lightboxImg.alt = imgEl.alt;
+    lightboxCategory.textContent = catEl ? catEl.getAttribute('data-lang-' + lang) || catEl.textContent : '';
+    lightboxTitle.textContent    = titleEl ? titleEl.getAttribute('data-lang-' + lang) || titleEl.textContent : '';
+
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gallery__item').forEach(function (item) {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', function () {
+      var img = item.querySelector('.gallery__img');
+      if (img) openLightbox(img, item);
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxBackdrop.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
   /* ---- Gallery "See more" button ---- */
   var seeMoreBtn = document.querySelector('.gallery__see-more');
   var hiddenItems = document.querySelectorAll('.gallery__item--hidden');
